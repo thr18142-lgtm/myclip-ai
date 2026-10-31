@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Studio · MyClip AI</title>
+  <meta name="description" content="Drop in a video, audio file or image, type the edit, and check the plan before it is applied." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="studio-page">
+  <header class="topbar">
+    <a href="index.html" class="wordmark">MyClip AI</a>
+    <nav class="tabs" aria-label="Studio sections">
+      <button class="tab" id="tab-edit" type="button" aria-pressed="true">Edit</button>
+      <button class="tab" id="tab-sources" type="button" aria-pressed="false">Sources</button>
+    </nav>
+    <span class="status" id="file-status">No file loaded</span>
+  </header>
+
+  <input id="file-input" type="file" accept="video/*,audio/*,image/*" hidden />
+
+  <div id="view-edit" class="workspace">
+    <aside class="chat" aria-label="Commands">
+      <div class="messages" id="messages" aria-live="polite"></div>
+      <div class="suggestions" id="suggestions"></div>
+      <form class="composer" id="composer">
+        <label for="command" class="sr-only">Tell MyClip what to change</label>
+        <textarea id="command" rows="2" placeholder="Cut the first 5 seconds, add captions, make it 9:16"></textarea>
+        <button class="button button-primary" type="submit">Send</button>
+      </form>
+      <p class="fine">Preview build: commands are matched on this device. The live version sends them to Claude.</p>
+    </aside>
+
+    <section class="preview" aria-label="Preview">
+      <div id="stage-area"></div>
+      <div class="transport">
+        <button class="button button-quiet" id="play" type="button" disabled>Play</button>
+        <span class="timecode" id="timecode">00:00.00 / 00:30.00</span>
+        <span class="kept" id="kept"></span>
+      </div>
+      <div id="timeline"></div>
+      <div class="applied">
+        <span id="applied-text">Nothing applied yet.</span>
+        <div class="applied-actions">
+          <button class="button button-quiet" id="replace" type="button" hidden>Replace file</button>
+          <button class="button button-quiet" id="undo" type="button" disabled>Undo last change</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="view-sources" class="sources-main" hidden>
+    <div class="sources-panel">
+      <h2>Connect a source</h2>
+      <p class="muted">Paste a link to any page or video, or connect an account. Connections show here as a preview. They start working once the server side is set up.</p>
+
+      <form class="link-form" id="link-form">
+        <label for="link-input" class="sr-only">Website or video link</label>
+        <input id="link-input" type="text" placeholder="https://example.com/video" inputmode="url" autocomplete="off" />
+        <button class="button button-primary" type="submit">Add link</button>
+      </form>
+      <p class="error" id="link-error" role="alert"></p>
+      <ul class="link-list" id="link-list"></ul>
+
+      <ul class="source-list">
+        <li>
+          <div>
+            <h3>GitHub</h3>
+            <p class="muted">Repos and project files</p>
+          </div>
+          <span class="pill">Needs server setup</span>
+        </li>
+        <li>
+          <div>
+            <h3>Google Drive</h3>
+            <p class="muted">Footage and exports in your drive</p>
+          </div>
+          <span class="pill">Needs server setup</span>
+        </li>
+        <li>
+          <div>
+            <h3>Dropbox</h3>
+            <p class="muted">Shared folders</p>
+          </div>
+          <span class="pill">Needs server setup</span>
+        </li>
+        <li>
+          <div>
+            <h3>YouTube</h3>
+            <p class="muted">Your uploads and channel videos</p>
+          </div>
+          <span class="pill">Needs server setup</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="js/edits.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>
